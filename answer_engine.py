@@ -32,15 +32,9 @@ def answer(question):
     if not ctx_chunks:
         return "N/A", []
 
-    context = "\n\n".join(
-        f"[Page {c['page']}]\n{c['text']}"
-        for c in ctx_chunks
-    )
+    context = "\n\n".join(f"[Page {c['page']}]\n{c['text']}" for c in ctx_chunks)
 
-    prompt = STRICT_PROMPT.format(
-        context=context,
-        question=question
-    )
+    prompt = STRICT_PROMPT.format(context=context, question=question)
 
     try:
         raw = ask(prompt, GIGACHAT_TOKEN)

@@ -6,6 +6,7 @@ OUT = "data/chunks.json"
 CHUNK_SIZE = 400
 OVERLAP = 100
 
+
 def chunk():
     pages = json.load(open(IN, encoding="utf-8"))
     chunks = []
@@ -21,20 +22,23 @@ def chunk():
         step = CHUNK_SIZE - OVERLAP
 
         for i in range(0, len(words), step):
-            chunk = " ".join(words[i:i+CHUNK_SIZE])
+            chunk = " ".join(words[i : i + CHUNK_SIZE])
             if len(chunk.strip()) < 50:
                 continue
 
-            chunks.append({
-                "text": chunk,
-                "page_index": p["page_index"],
-                "pdf_sha1": p["pdf_sha1"]
-            })
+            chunks.append(
+                {
+                    "text": chunk,
+                    "page_index": p["page_index"],
+                    "pdf_sha1": p["pdf_sha1"],
+                }
+            )
 
     print(f"[DONE] Created {len(chunks)} chunks")
 
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(chunks, f, ensure_ascii=False, indent=2)
+
 
 if __name__ == "__main__":
     chunk()

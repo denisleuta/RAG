@@ -7,6 +7,7 @@ import time
 PDF_DIR = "data/pdfs"
 OUT = "data/parsed_pages.json"
 
+
 def parse_all():
     pages = []
 
@@ -43,11 +44,7 @@ def parse_all():
 
                     if text and len(text.strip()) > 50:
                         extracted_pages += 1
-                        pages.append({
-                            "text": text,
-                            "page": i - 1,
-                            "pdf_sha1": sha1
-                        })
+                        pages.append({"text": text, "page": i - 1, "pdf_sha1": sha1})
 
         except Exception as e:
             print(f"[ERROR] Failed to parse {file}: {e}")
@@ -70,6 +67,7 @@ def parse_all():
         json.dump(pages, f, ensure_ascii=False, indent=2)
 
     print(f"[DONE] Saved parsed pages to {OUT}")
+
 
 if __name__ == "__main__":
     parse_all()

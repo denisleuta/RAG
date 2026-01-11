@@ -8,21 +8,18 @@ answers = []
 for q in questions:
     val, ctx = answer(q["text"])
 
-    answers.append({
-        "question_text": q["text"],
-        "value": val,
-        "references": [
-            {
-                "pdf_sha1": c["pdf_sha1"],
-                "page": c["page"]
-            } for c in ctx
-        ]
-    })
+    answers.append(
+        {
+            "question_text": q["text"],
+            "value": val,
+            "references": [{"pdf_sha1": c["pdf_sha1"], "page": c["page"]} for c in ctx],
+        }
+    )
 
 submission = {
     "team_email": "mashatrunina2508@gmail.com",
     "submission_name": "rag_gigachat_strict_v1",
-    "answers": answers
+    "answers": answers,
 }
 
 with open("submission.json", "w", encoding="utf-8") as f:

@@ -12,9 +12,7 @@ print(f"[INFO] Chunks: {len(texts)}")
 
 print("[TFIDF] Vectorizing...")
 vectorizer = TfidfVectorizer(
-    max_features=50000,
-    ngram_range=(1, 2),
-    stop_words="english"
+    max_features=50000, ngram_range=(1, 2), stop_words="english"
 )
 
 X = vectorizer.fit_transform(texts).astype(np.float32)
@@ -27,6 +25,7 @@ faiss.write_index(index, "data/faiss.index")
 np.save("data/tfidf.npy", X.toarray())
 
 import pickle
+
 with open("data/tfidf_vectorizer.pkl", "wb") as f:
     pickle.dump(vectorizer, f)
 
