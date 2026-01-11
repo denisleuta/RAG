@@ -1,18 +1,27 @@
 import json
-import numpy as np
-import faiss
 import pickle
+import faiss
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-with open("data/chunks.json", "r", encoding="utf-8") as f:
-    chunks = json.load(f)
 
-index = faiss.read_index("data/faiss.index")
-X = np.load("data/tfidf.npy")
+def load_chunks():
+    with open("data/chunks.json", "r", encoding="utf-8") as f:
+        return json.load(f)
 
-with open("data/tfidf_vectorizer.pkl", "rb") as f:
-    vectorizer = pickle.load(f)
 
-def retrieve(query, k):
-    q = vectorizer.transform([query]).astype(np.float32).toarray()
-    _, idx = index.search(q, k)
-    return [chunks[i] for i in idx[0]]
+def retrieve(query, top_k=5):
+    chunks = load_chunks()
+
+    vectorizer = pickle.load(open("data/tfidf_vectorizer.pkl", "rb"))
+    index = faiss.read_index("data/faiss.index")
+
+    q_vec = vectorizer.transform([query]).toarray().astype("float32")
+    _, ids = index.search(q_vec, top_k)
+
+    results = []
+    for idx in ids[0]:
+        if idx < len(chunks):
+            results.append(chunks[idx])
+
+    return results

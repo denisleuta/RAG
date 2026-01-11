@@ -27,7 +27,7 @@ def chunk():
 
             chunks.append({
                 "text": chunk,
-                "page": p["page"],
+                "page_index": p["page_index"],
                 "pdf_sha1": p["pdf_sha1"]
             })
 
