@@ -1,0 +1,11 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: local
+    hooks:
+      - id: json-check
+        name: JSON Validation
+        entry: python -m json.tool
+        language: system
+        types: [json]
+        pass_filenames: true
+        

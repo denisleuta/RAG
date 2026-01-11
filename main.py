@@ -14,7 +14,7 @@ for q in questions:
         "references": [
             {
                 "pdf_sha1": c["pdf_sha1"],
-                "page_index": c["page_index"]
+                "page": c["page"]
             } for c in ctx
         ]
     })
